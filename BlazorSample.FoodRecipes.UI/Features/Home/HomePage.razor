@@ -1,0 +1,35 @@
+﻿@page "/"
+@inject HttpClient _httpClient;
+
+<PageTitle>Recipes Home Page</PageTitle>
+
+@if (_recipes == null)
+{
+    <div class="alert alert-warning">
+        Loading Recipes...
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (var recipe in _recipes)
+        {
+            <RecipeCard recipe="recipe" Col="4"></RecipeCard>
+        }
+    </div>
+}
+
+@code {
+    public IEnumerable<Recipe> _recipes { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        try
+        {
+            _recipes = await _httpClient.GetFromJsonAsync<IEnumerable<Recipe>>("Data.json");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Badness => {ex.Message}");
+        }
+    }
+}

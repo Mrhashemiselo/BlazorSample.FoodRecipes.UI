@@ -1,0 +1,67 @@
+[
+  {
+    "Id": 1,
+    "Name": "Pizza",
+    "Description": "This BBQ chicken pizza is loaded with diced chicken, spicy barbecue sauce, pepperoncini ...",
+    "ImageUrl": "https://www.allrecipes.com/thmb/wSqQsq5SC-wy_7Ys7RkYJdDWwTo=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/AR-24878-bbq-chicken-pizza-beauty-4x3-39cd80585ad04941914dca4bd82eae3d.jpg",
+    "Originality": "Italian",
+    "TimeInMinutes": 20,
+    "Price": 250000,
+    "Ingridients": [
+      {
+        "Id": 1,
+        "Name": "Pizza cheese"
+      },
+      {
+        "Id": 2,
+        "Name": "Roast chicken"
+      },
+      {
+        "Id": 3,
+        "Name": "Mushroom"
+      }
+    ]
+  },
+  {
+    "Id": 2,
+    "Name": "Ghorme sabzi",
+    "Description": "In this article, we have explained the khoresh ghormeh sabzi recipe and tahdig ghormeh sabzi  ...",
+    "ImageUrl": "https://mealscook.com/wp-content/uploads/2023/02/persian-ghormeh-sabzi-stew-895x1024.jpg",
+    "Originality": "Iranian",
+    "TimeInMinutes": 60,
+    "Price": 150000,
+    "Ingridients": [
+      {
+        "Id": 1,
+        "Name": "Beef"
+      },
+      {
+        "Id": 2,
+        "Name": "Dried Limes"
+      },
+      {
+        "Id": 3,
+        "Name": "Spices"
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "Name": "Sushi",
+    "Description": "However, the term sushi actually refers to rice seasoned with sweetened vinegar and often topped or filled with a variety of ingredients such as seafood (both raw and cooked) and vegetables",
+    "ImageUrl": "https://www.justonecookbook.com/wp-content/uploads/2020/01/Sushi-Rolls-Maki-Sushi-%E2%80%93-Hosomaki-1106-II.jpg",
+    "Originality": "Japanese",
+    "TimeInMinutes": 60,
+    "Price": 200000,
+    "Ingridients": [
+      {
+        "Id": 1,
+        "Name": "fish"
+      },
+      {
+        "Id": 2,
+        "Name": "rice"
+      }
+    ]
+  }
+]

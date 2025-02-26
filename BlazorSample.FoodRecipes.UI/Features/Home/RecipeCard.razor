@@ -27,10 +27,16 @@
             </svg>
             @recipe.TimeInString
         </span>
+        <span>
+            <button class="btn btn-success" @onclick="@(async ()=>await OnSelectRecipe.InvokeAsync(recipe))">Select</button>
+        </span>
     </div>
 </div>
 
 @code {
     [Parameter,EditorRequired]
     public Recipe recipe { get; set; }
+
+    [Parameter]
+    public EventCallback<Recipe> OnSelectRecipe { get; set; }
 }

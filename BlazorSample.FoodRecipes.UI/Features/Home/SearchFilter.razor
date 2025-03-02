@@ -1,0 +1,8 @@
+﻿@inject NavigationManager _navigationManager
+
+<div>
+    <label for="maxTime">Max Time</label>
+    <input id="maxTime" type="number" class="form-control m-1" @bind="MaxTime"/>
+    <input type="button" value="Filter" @onclick="Filter" class="btn btn-success"/>
+    <input type="button" value="Clear" @onclick="Clear" class="btn btn-danger"/>
+</div>

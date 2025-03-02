@@ -1,0 +1,24 @@
+﻿@page "/search/{SearchTerm}"
+@* @page "/search/{SearchTerm}/maxTime/{MaxTime:int}" *@
+@inject HttpClient _httpClient;
+
+<h3>SearchPage @SearchTerm</h3>
+<hr />
+<SearchFilter MaxTime="@MaxTime" SearchTerm="@SearchTerm"></SearchFilter>
+<hr />
+@if (_recipes == null)
+{
+    <div class="alert alert-warning">
+        Loading Recipes...
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        @foreach (var recipe in _recipes)
+        {
+            <RecipeCard recipe="recipe" OnSelectRecipe="OnSelectRecipeHandler"></RecipeCard>
+        }
+    </div>
+    <RecipeDetails recipe="selectedRecipe"></RecipeDetails>
+}

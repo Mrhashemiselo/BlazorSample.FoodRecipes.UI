@@ -1,8 +1,17 @@
+using BlazorSample.FoodRecipes.DAL;
+using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.Load("BlazorSample.FoodRecipes.Shared")));
+
+var dbConnection = builder.Configuration.GetConnectionString("RecipeCnn");
+builder.Services.AddDbContext<FoodRecipeDbContext>(d => d.UseSqlServer(dbConnection));
 
 var app = builder.Build();
 

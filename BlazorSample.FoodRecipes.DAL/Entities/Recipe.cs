@@ -1,4 +1,4 @@
-﻿namespace BlazorSample.FoodRecipes.UI.Features.Home;
+﻿namespace BlazorSample.FoodRecipes.DAL.Entities;
 
 public class Recipe
 {
@@ -8,7 +8,6 @@ public class Recipe
     public string Description { get; set; }
     public string Originality { get; set; }
     public int TimeInMinutes { get; set; }
-    public string TimeInString => $"{TimeInMinutes / 60}h {TimeInMinutes % 60}m";
     public int Price { get; set; }
-    public IEnumerable<Ingredient> Ingredients { get; set; } = Enumerable.Empty<Ingredient>();
+    public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
 }

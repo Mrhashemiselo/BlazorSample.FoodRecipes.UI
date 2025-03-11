@@ -1,0 +1,125 @@
+﻿@page "/add-recipe"
+@inject HttpClient _httpClient;
+
+<PageTitle>Add recipe</PageTitle>
+
+<h3>Add a recipe</h3>
+@if(_success)
+{
+    <div class="alert alert-success">
+        Recipe saved with id: @_id
+    </div>
+}
+else if(!string.IsNullOrEmpty(_errorMessage))
+{
+    <div class="alert alert-danger">
+        @_errorMessage
+    </div>
+}
+<EditForm Model="_recipe" OnValidSubmit="SubmitFrom">
+    <FluentValidationValidator></FluentValidationValidator>
+    <FormSection Title="Basic Data" Description="what is the lorem ipsum. Is it a random text?">
+        <FormFieldSet>
+            <label for="Name" class="fw-bold text-secondary">
+                Name
+            </label>
+            <InputText @bind-Value="_recipe.Name" class="form-control" id="recipeName"></InputText>
+            <ValidationMessage For="@(()=>_recipe.Name)" />
+        </FormFieldSet>
+        <FormFieldSet>
+            <label for="Description" class="fw-bold text-secondary">
+                Description
+            </label>
+            <InputTextArea rows="6" @bind-Value="_recipe.Description" class="form-control" id="recipeDescription"></InputTextArea>
+            <ValidationMessage For="@(()=>_recipe.Description)" />
+        </FormFieldSet>
+        <FormFieldSet>
+            <label for="Originality" class="fw-bold text-secondary">
+                Originality
+            </label>
+            <InputText @bind-Value="_recipe.Originality" class="form-control" id="recipeOriginality"></InputText>
+            <ValidationMessage For="@(()=>_recipe.Originality)" />
+        </FormFieldSet>
+        <FormFieldSet>
+            <label for="Price" class="fw-bold text-secondary">
+                Price
+            </label>
+            <InputNumber @bind-Value="_recipe.Price" class="form-control" id="recipePrice"></InputNumber>
+            <ValidationMessage For="@(()=>_recipe.Price)" />
+        </FormFieldSet>
+        <FormFieldSet>
+            <label for="TimeInMinutes" class="fw-bold text-secondary">
+                TimeInMinutes
+            </label>
+            <InputNumber @bind-Value="_recipe.TimeInMinutes" class="form-control" id="recipeTimeInMinutes"></InputNumber>
+            <ValidationMessage For="@(()=>_recipe.TimeInMinutes)" />
+        </FormFieldSet>
+    </FormSection>
+    <FormSection Title="Ingredient Data" Description="Lorem ipsum is a dummy text or placeholder">
+        @foreach (var ingredient in _recipe.Ingredients)
+        {
+            <FormFieldSet>
+                <label for="IngredientName" class="fw-bold text-secondary">
+                    Ingredient Name
+                </label>
+                <div class="input-group">
+                    <InputText @bind-Value="ingredient.Name" class="form-control" id="ingredientName" />
+                    <button type="button" class="btn btn-outline-danger" @onclick="@(()=>_recipe.Ingredients.Remove(ingredient))">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1z"></path>
+                        </svg>
+                        Remove
+                    </button>
+                    <ValidationMessage For="@(()=>ingredient.Name)" />
+                </div>
+            </FormFieldSet>
+        }
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-outline-success" @onclick="(()=>_recipe.Ingredients.Add(new IngredientDto()))">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"></path>
+                    </svg>
+                    Add new ingredient
+                </button>
+                <ValidationMessage For="@(()=>_recipe.Ingredients)" />
+            </div>
+        </div>
+    </FormSection>
+    <div class="mt-3 mb-4">
+        <div class="row">
+            <div class="col-8 offset-4">
+                <button class="btn btn-outline-secondary" type="button"
+                @onclick="@(() => _recipe = new RecipeDto())">
+                    Reset
+                </button>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private RecipeDto _recipe = new();
+    private bool _success;
+    private int _id;
+    private string _errorMessage;
+
+    public async Task SubmitFrom()
+    {
+        var response = await _httpClient.PostAsJsonAsync("/api/Recipe", _recipe);
+        if(response.IsSuccessStatusCode)
+        {
+            _recipe = new RecipeDto();
+            _errorMessage = string.Empty;
+            _id = int.Parse(await response.Content.ReadAsStringAsync());
+            _success = true;
+        }
+        else
+        {
+            _errorMessage = "There was a problem to saving recipe";
+            _success = false;
+            _id = -1;
+        }
+    }
+}
